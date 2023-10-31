@@ -2,7 +2,7 @@ from django.core.mail import EmailMessage, send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
 
-from iqos import settings
+from shop import settings
 
 
 

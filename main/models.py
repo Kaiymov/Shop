@@ -34,6 +34,14 @@ class CategoryBrand(models.Model):
     def __str__(self):
         return f'{self.category_parent} - {self.name}'
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.image.url
+        except Exception:
+            url = 'static/img/no_img.png'
+        return url
+
     class Meta:
         verbose_name = 'Категория бренда'
         verbose_name_plural = 'Категории бренда'

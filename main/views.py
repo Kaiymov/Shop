@@ -135,4 +135,4 @@ def not_found_page(request, exception):
 
 
 def server_error_page(request, *args, **kwargs):
-    return render(request, 'errors/errors-page.html', status=500)
+    return render(request, 'errors/error-page.html', status=500)

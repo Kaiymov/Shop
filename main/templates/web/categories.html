@@ -25,9 +25,9 @@
       <div class="article-wrapper">
         <figure>
           {% if cat.image %}
-            <img src="{{ cat.image.url }}"/>
+            <img src="{{ cat.image.url }}" alt="{{pr.title}}"/>
           {% else %}
-            <img src="{% static 'img/no_image.webp' %}"/>
+            <img src="{% static 'img/no_image.webp' %}" alt="{{pr.title}}"/>
           {% endif %}
         </figure>
         <div class="article-body">
