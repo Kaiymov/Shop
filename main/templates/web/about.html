@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %} О нас {% endblock %}
+{% load static %}
+
+
+{% block css_connect %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block link %}
+    <div class="bg-secondary">
+        <div class="container py-3">
+            <h6 class="mb-0">
+                <a href="{% url 'home' %}" class="text-white-50">Home</a>
+                <span class="text-white-50 mx-2"> > </span>
+                <a href="{% url 'about_us' %}" class="text-white-50">About us</a>
+            </h6>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="containHeader">
+    <div class="headImg"><img src="{% static 'img/star_piture.jpg' %}" alt=""></div>
+    <div class="screen"><img src="{% static 'img/star_piture.jpg' %}" alt=""></div>
+    <div class="containText">
+        <h1>Sanitation is the name</h1>
+        <h3>porta potties is the game</h3>
+    </div>
+</div>
+
+<div class="secOne">
+    <div class="containText">
+        <div class="textGroup textOne">
+            <h2>
+                <inline>From</inline>
+                Humble Beginnings
+            </h2>
+            <p>Currently Alaska Porta Potty LLC is one of the highest rated porta potty rental services in Anchorage
+                Alaska. We provide our clients with the highest quality customer experience while handling all of their
+                event based sanitation needs. We also provide
+                services to both large and small scale social events as well as to the construction and subcontracting
+                industries. Although we are on our way to becoming a household name in Alaska, we come from a very
+                modest beginning.</p>
+        </div>
+
+        <div class="containImg">
+            <div class="frank"><img src="{% static 'img/star_piture.jpg' %}" alt=""></div>
+            <div class="name"></div>
+        </div>
+
+        <div class="textGroup textTwo">
+            <h2>(AKA) Frankie Perez</h2>
+            <h4>
+                Founder and President</br>
+                Alaska Porta Potty LLC
+            </h4>
+
+            <p>Frankie started in the business as somewhat of a greenhorn in the industry. Throughout his career in
+                ____(what did you do before)____ Frank gained his experience and know how, much like anyone else,
+                through trial, error, blood, sweat and tears. Working
+                endless hours _____(doing this)____, Frank developed a passion for customer satisfaction and the ability
+                to deliver and maintain top notch customer relationships. Although he was dedicated and driven, Frank
+                had no idea he would be the face of what
+                was soon to become one of the greatest achievements of his young adult life.</p>
+        </div>
+        <div class="textGroup textThree">
+            <h2>RECOGNIZED FOR HIS OUTSTANDING WORK</h2>
+            <p>Throughout his career in the mobile sanitation field, Frank has been recognized for his ability to
+                confront difficult situations head on. He's displayed his ability to adapt and overcome throughout the
+                challenging and harsh Alaskan winters, and delivers
+                on his promise,
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="containAngle">
+    <div class="angleImg"></div>
+    <div class="screen"></div>
+    <h2>Quote from frank</h2>
+</div>
+
+<div class="secTwo">
+    <h2>Outside the workplace</h2>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis, cum inventore? Maiores dolore quo
+        laboriosam commodi ut, eaque voluptatum placeat exercitationem error, corporis harum impedit, nisi temporibus
+        fugit soluta in velit sed voluptate earum rerum ipsam architecto veniam illum? Nam sint ullam amet itaque
+        accusamus dolorum aperiam quo fugiat temporibus?</p>
+</div>
+
+<div class="secThree">
+    <div class="imgOne"><img src="{% static 'img/star_piture.jpg' %}" alt=""></div>
+    <div class="screen"></div>
+    <div class="containText">
+        <h1>"
+            <inline>W</inline>
+            ithout my Alaskan family, none of this would be possible, I owe my success and achievements to them, it's
+            because of their support I always strive to go that extra mile for my clients"
+        </h1>
+        <p>Frank Perez ___(date quoted)___</br>
+            Founder and President</p>
+    </div>
+</div>
+
+<div class="secFour">
+    <div class="containText">
+        <h2>Established __(month & year)</h2>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam incidunt doloribus fugit sapiente qui
+            architecto provident minus ea earum odit neque molestias eaque possimus nobis animi officia nihil dolore,
+            totam natus saepe sunt! Dolore labore sunt et necessitatibus earum explicabo, accusantium ducimus doloremque
+            mollitia, reprehenderit minima quod aspernatur, ex quia?</p>
+    </div>
+</div>
+{% endblock %}

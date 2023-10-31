@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %} IQOS Shop {% endblock %}
+{% load static %}
+
+{% block css_connect %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<!-- Font Awesome -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css"
+  rel="stylesheet"
+/>
+{% endblock %}
+
+{% block js_connect %}
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+{% endblock %}
+
+{% block link %}
+    <div class="bg-secondary">
+        <div class="container py-3">
+            <h6 class="mb-0">
+                <a href="{% url 'home' %}" class="text-white-50">Home</a>
+                <span class="text-white-50 mx-2"> > </span>
+                <a href="{% url 'product_list' pr.category.slug %}" class="text-white-50">{{ pr.category.name }}</a>
+                <span class="text-white-50 mx-2"> > </span>
+                <a href="" class="text-white"><u>{{ pr.category_brand.name }}</u></a>
+                <span class="text-white-50 mx-2"> > </span>
+                <a href="{% url 'detail' pr.id %}" class="text-white"><u>{{ pr.title }}</u></a>
+            </h6>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<section class="py-3">
+  <div class="container">
+    <div class="row gx-6">
+      <aside class="col-lg-6">
+        <div class="bg-light rounded-4 mb-3 d-flex justify-content-center" style="height: 53.5vh;">
+          {% if pr.image %}
+            <img style="max-width: 100%; max-height: 100%; margin: auto; object-fit:cover;" class="rounded-4 fit img-fluid"  src="{{ pr.image.url }}" alt="{{ pr.title }}"/>
+          {% else %}
+            <img style="max-width: 100%; max-height: 100vh; margin: auto; object-fit:cover" class="rounded-4 fit" src="{% static 'img/no_img.png' %}" alt="{{ pr.title }}"/>
+          {% endif %}
+        </div>
+      </aside>
+      <main class="col-lg-6 mb-3 d-flex">
+        <div class="ps-lg-3">
+          <h4 class="title text-dark">
+            {{ pr.title }}
+          </h4>
+          <div class="d-flex flex-row my-3">
+            <div class="text-warning mb-1 me-2">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="ms-1">
+                4.5
+              </span>
+            </div>
+            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i>154 orders</span>
+          </div>
+
+          <div class="mb-3">
+            <span class="h5">$ {{ pr.price }}</span>
+            <span class="text-muted">/ 1 шт</span>
+          </div>
+
+          <div class="row">
+            <dt class="col-3">Наличии:</dt>
+            {% if pr.status is True %}
+            <p class="text-success col-9">In stock</p>
+            {% else %}
+            <span class="text-danger ms-2">No stock</span>
+            {% endif %}
+
+            <dt class="col-3">Product ID:</dt>
+            <dd class="col-9">{{ pr.id }}</dd>
+
+
+            <dt class="col-3">Type:</dt>
+            <dd class="col-9">Regular</dd>
+
+            <dt class="col-3">Color:</dt>
+            <dd class="col-9">{{ pr.color }}</dd>
+
+            <dt class="col-3">Material</dt>
+            <dd class="col-9">Cotton, Jeans</dd>
+
+            <dt class="col-3">Brand</dt>
+            <dd class="col-9">{{ pr.category_brand }}</dd>
+          </div>
+
+          <hr/>
+
+          <div class="row mb-3">
+            <div class="col-md-4 col-6 mb-3">
+              <label class="mb-2 d-block">Quantity</label>
+              <div class="input-group mb-3" style="width: 250px;">
+                <input type="number" name="quantity" class="form-control text-center input-text qty text"
+                       min="1" value="1" placeholder="1" aria-label="Example text with button addon"
+                       aria-describedby="button-addon1"/>
+                <button class="btn btn-warning px-4 update-cart" type="button" data-product="{{ pr.id }}" data-action="add">
+                  <i class="fa fa-shopping-basket"></i> add cart
+                </button>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="btn btn-warning shadow-0"> Buy now </a>
+          <a href="#" class="btn btn-light border border-secondary-subtle py-2.5 icon-hover px-3">
+            <i class="me-1 fa fa-heart fa-lg"></i> Save
+          </a>
+        </div>
+      </main>
+    </div>
+
+
+    <div class="row gx-2 py-4">
+      <div class="border rounded-2 g-col-4">
+        <div class="rounded-2 px-2 py-2 bg-white">
+
+          <!-- Pills content -->
+          <div class="tab-content py-2" id="ex1-content">
+            <div class="tab-pane fade show active" id="ex1-pills-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+              <dt class="ms-2">
+                Доп. информация
+              </dt>
+              <table class="table border mt-3 mb-2">
+                <tr>
+                  <th class="py-2">Описание:</th>
+                  <td class="py-2">{{pr.description}}</td>
+                </tr>
+                <tr>
+                  <th class="py-2">Processor capacity:</th>
+                  <td class="py-2">2.3GHz dual-core Intel Core i5</td>
+                </tr>
+                <tr>
+                  <th class="py-2">Camera quality:</th>
+                  <td class="py-2">720p FaceTime HD camera</td>
+                </tr>
+                <tr>
+                  <th class="py-2">Memory</th>
+                  <td class="py-2">8 GB RAM or 16 GB RAM</td>
+                </tr>
+                <tr>
+                  <th class="py-2">Graphics</th>
+                  <td class="py-2">Intel Iris Plus Graphics 640</td>
+                </tr>
+              </table>
+            </div>
+            <div class="tab-pane fade mb-2" id="ex1-pills-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+              Tab content or sample information now <br/>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+              dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+              do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+              nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            </div>
+            <div class="tab-pane fade mb-2" id="ex1-pills-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+              Another tab content or sample information now <br/>
+              Dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+              aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+              commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+              mollit anim id est laborum.
+            </div>
+            <div class="tab-pane fade mb-2" id="ex1-pills-4" role="tabpanel" aria-labelledby="ex1-tab-4">
+              Some other tab content or sample information now <br/>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+              aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+              dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est laborum.
+            </div>
+          </div>
+          <!-- Pills content -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

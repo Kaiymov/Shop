@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Заказ товара</title>
+    <!-- Preconnects -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Sweet Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- local file -->
+    <link rel="stylesheet" href="{% static 'css/checkout.css'%}" />
+    <!-- Íconos -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <main id="main">
+        <h1>Заказ</h1>
+        <!-- Mercancía -->
+        <aside class="ware">
+            {% for item in items %}
+            <div class="ware__item">
+                <figure class="item__figure">
+                    {% if item.product.image %}
+                        <a class="item__img" href="{% url 'detail' item.product.id %}"><img class="item__img" src="{{ item.product.image.url }}" alt="Bolso vintage" /></a>
+                    {% else %}
+                        <a class="item__img" href="{% url 'detail' item.product.id %}"><img class="item__img" src="{% static 'img/no_img.png' %}" alt="Bolso vintage" /></a>
+                    {% endif %}
+                    <a href="{% url 'detail' item.product.id %}"><figcaption class="item__figure__figcaption">{{ item.product.title }}</figcaption></a>
+                    <p class="item__figure__price"><span class="figure__price--off">${{ item.product.price }}</span> <span class="figure__price--crossed">$94.99</span></p>
+                    <p class="global__quantity item__figure__figcaption"><span>Кол:</span> <span class="quantity__total">{{ item.quantity }} шт</span></p>
+
+                </figure>
+            </div>
+            {% endfor %}
+
+            <p class="global__price global__price--shipping"><span>Shipping</span> <span>$19</span></p>
+        <p class="global__price"><span>Total</span><span class="quantity__total">{{ order.get_cart_total_price }}</span></p>
+        </aside>
+        <!-- Formulario -->
+        <form method="POST" action="{% url 'checkout' %}" class="form" id="form">
+            {% csrf_token %}
+            {% if user.is_anonymous %}
+                <fieldset class="fieldset fieldset--contact">
+                    <label class="label" for="f-name">Имя</label>
+                    <p class="field field--text">
+                        <i class="material-icons form__icons">account_circle</i>
+                        <input type="text" name="first_name" id="f-name" class="input input--text" placeholder="Алексей..." required />
+                    </p>
+                    <legend class="legend">Контакт информация</legend>
+                    <label class="label" for="e-mail">Почта</label>
+                    <p class="field field--text">
+                        <i class="material-icons form__icons">email</i>
+                        <input type="email" name="email" id="e-mail" class="input input--text" placeholder="explane@..." required />
+                    </p>
+                    <label class="label" for="phone-num">Телефон</label>
+                    <p class="field field--text">
+                        <i class="material-icons form__icons">phone</i>
+                        <input type="tel" name="phone-number" id="phone-num" class="input input--text" placeholder="+..." maxlength="14" pattern="\(\w{3}\) \w{3}[ -]\w{4}" title="Un número de teléfono válido tiene los tres primeros números entre paréntesis seguidos de un espacio, tres números seguidos de un espacio o guión y los últimos cuatro números. Además, evita poner el código de tu país." required />
+                    </p>
+                </fieldset>
+            {% else %}
+            {% endif %}
+
+            <!-- Адрес доставки -->
+            <fieldset class="fieldset">
+                <legend class="legend">Адрес доставки</legend>
+                <label class="label" for="address">Адрес</label>
+                <p class="field field--text">
+                    <i class="material-icons form__icons">home</i>
+                    <input type="text" name="address" id="address" class="input input--text" placeholder="Адрес..." required />
+                </p>
+
+                <label class="label" for="city">Город</label>
+                <p class="field field--text">
+                    <i class="material-icons form__icons">location_city</i>
+                    <input type="text" name="city" id="city" class="input input--text" placeholder="Город..." required />
+                </p>
+
+                <div class="container-address-country">
+                    <div>
+                        <label class="label label__shipping--country" for="country">Страна</label>
+                        <div class="content-field__shipping--country">
+                            <p class="field field__shipping--country">
+                                <i class="material-icons form__icons">public</i>
+                                <select name="country" id="country" class="input select__shipping">
+                                    <option value="kyrgyzstan">Кыргызстан</option>
+                                    <option value="kazahstan">Казахстан</option>
+                                </select>
+                                <i class="material-icons icon--select">expand_more</i>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="label label__shipping--zipCode" for="zip-code">Почтовый индекс</label>
+                        <p class="field field--text field__shipping--zipCode">
+                            <i class="material-icons form__icons">markunread_mailbox</i>
+                            <input type="number" name="zip_code" id="zip-code" class="input input--text" placeholder="zip code..." minlength="3" required />
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <!-- Checkbox para guardar info -->
+            <p class="field field__saveInfo">
+                <input type="checkbox" name="send_email_check" id="save-info" class="saveInfo--pointer"/>
+                <label class="label label__saveInfo saveInfo--pointer" for="save-info">Отправить чек по почте?</label>
+            </p>
+            <p class="help-block">{{ form.errors }}</p>
+            <!-- Botón de envío -->
+            <div class="container__form__btn">
+                <button type="submit" class="form__btn disabled" id="form-button">
+                    <span class="button__text">Оформить</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var preloader = document.getElementById('preloader');
+            preloader.style.display = 'none';
+        });
+
+        function getToken(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getToken('csrftoken');
+
+        document.getElementById('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var url = '/order/process_order/';
+
+            $.ajax({
+                type: 'POST',
+                url: $("form").attr("action"),
+                data: $("form").serialize(),
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Успешно!',
+                        text: 'Ваш заказ успешно оформлен.',
+                        confirmButtonText: 'Закрыть',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                cart = {}
+                                document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
+                                window.location.href = '{% url 'home' %}';
+                            }
+                        });
+                    },
+                });
+            });
+    </script>
+</body>
+</html>

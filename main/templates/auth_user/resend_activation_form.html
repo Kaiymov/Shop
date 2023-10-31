@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+{% load i18n %}
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'registration/login.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="title">Resend Email</div>
+            <div class="input-box underline">
+                <input type="text" name="email" placeholder="Enter Your Email" required>
+                <div class="underline"></div>
+            </div>
+            {{ form.errors }}
+            <div class="forgot-password">
+              <a class="link-pass" href="{% url 'auth_password_reset' %}">Забыли пароль?</a>
+            </div>
+            <div class="input-box button">
+              <input type="submit" name="" value="Send">
+            </div>
+            <div class="register">
+                <a class="link-pass" href="{% url 'register' %}">У вас нет аккаунтa?</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

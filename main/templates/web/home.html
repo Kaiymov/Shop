@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %} IQOS Shop {% endblock %}
+{% load static %}
+
+{% block css_connect %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block link %}
+    <div class="bg-secondary">
+        <div class="container py-3">
+            <!-- Breadcrumb -->
+                <h6 class="mb-0">
+                    <a href="{% url 'home' %}" class="text-white-50">Home</a>
+                    <span class="text-white-50 mx-2"> > </span>
+                </h6>
+            <!-- Breadcrumb -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid bg-trasparent my-1 p-3" style="position: relative">
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+        {% for pr in products %}
+        <div class="col hp">
+            <div class="card h-100 shadow-sm">
+                <a href="{% url 'detail' pr.pk %}">
+                    <img src="{{ pr.imageURL }}" class="card-img-top" alt="{{product.title}}"/>
+                </a>
+
+                <div class="label-top shadow-sm">
+                    <a class="text-white" href="{% url 'product_list' pr.category.slug %}">{{ pr.category.name }}</a>
+                </div>
+                <div class="card-body">
+                    <div class="clearfix mb-3">
+                        <span class="float-start badge bg-secondary text-white">{{ pr.price }} COM</span>
+                        <span class="float-end"><a href="{% url 'detail' pr.pk %}" class="small text-muted text-uppercase aff-link">Детально</a></span>
+                    </div>
+                    <h5 class="card-title text-center">
+                        <a href="{% url 'detail' pr.pk %}">{{ pr.title }}</a>
+                    </h5>
+
+                    <div class="d-grid gap-2 my-4">
+                            <button type="button" data-product="{{ pr.id }}" data-action="add" class="btn btn-warning update-cart"><i class="me-1 fa fa-shopping-basket"></i> Add to cart</button>
+                    </div>
+
+                    <div class="clearfix mb-1">
+                        <span class="float-start">
+                            <a href="#"><i class="fas fa-question-circle"></i></a>
+                        </span>
+
+                        <span class="float-end">
+                            <i class="far fa-heart" style="cursor: pointer"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>NO</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% if products.has_previous %}
+    <p><a href="{% url 'home' %}?page={{products.previous_page_number}}">Previous Page</a></p>
+{% endif %}
+{% if products.has_next %}
+    <p><a href="{% url 'home' %}?page={{products.next_page_number}}">Next Page</a></p>
+{% endif %}
+
+{% endblock %}
